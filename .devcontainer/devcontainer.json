@@ -1,5 +1,10 @@
 {
   "image": "xiaohaihuang/cab420-workspace",
+  "settings": {
+    "python.defaultInterpreterPath": "/opt/conda/envs/cab420-env/bin/python",
+    "python.linting.enabled": true,
+    "python.linting.pylintEnabled": true,
+  },
   "extensions": [
     "ms-python.python",
     "ms-python.vscode-pylance",
