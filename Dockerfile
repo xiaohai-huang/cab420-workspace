@@ -10,4 +10,6 @@ RUN conda env create -f /conda_temp/environment.yml
 
 WORKDIR /work
 
+EXPOSE 8888
+
 CMD ["conda", "run", "--no-capture-output", "-n", "cab420-env", "jupyter-lab","--ip=0.0.0.0","--no-browser","--allow-root"]
