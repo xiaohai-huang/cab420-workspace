@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  python-app:
+  jupyter-notebook:
     build: ./
     ports:
       - "8888:8888"
