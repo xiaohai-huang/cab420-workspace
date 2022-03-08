@@ -11,10 +11,10 @@ docker-compose up
 
 ## Update packages
 
-In container
+In container, the environment.yml file should be located inside `work` directory.
 
 ```bash
-conda env export > environment_test.yml
+conda env export > environment.yml
 ```
 
 ## Note
