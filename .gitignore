@@ -9,5 +9,5 @@
 profile_default/
 ipython_config.py
 *:Zone.Identifier
-
+__pycache__
 __MACOSX
