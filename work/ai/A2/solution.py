@@ -6,6 +6,9 @@ from tensorflow import keras
 from tensorflow.keras import layers
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.metrics import classification_report
+
 
 def load_data(data_directory="small_flower_dataset"):
     """Preparation of the training, validation and test sets.
@@ -30,14 +33,14 @@ def load_data(data_directory="small_flower_dataset"):
     # split into 3 sets
     X_train, X_other, Y_train, Y_other = train_test_split(images, labels, test_size=0.3, random_state=333)
     X_val, X_test, Y_val, Y_test = train_test_split(X_other, Y_other, test_size=0.5, random_state=333)
-    return (X_train, Y_train), (X_val, Y_val), (X_test, Y_test)
+    return (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
 
 initial_epochs = 30
 fine_tune_epochs = 10
 def train_model(dataset, learning_rate=0.01, momentum=0.0):
     """Train a MobileNetV2 model.
     
-    dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test)
+    dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
     learning_rate: the learning rate for SGD optimizer
     momentum: the momentum value for SGD optimizer
 
@@ -46,7 +49,7 @@ def train_model(dataset, learning_rate=0.01, momentum=0.0):
     history: the history dictionary that contains information about 
     [accuracy, val_accuracy, loss, val_loss]
     """
-    (X_train, Y_train), (X_val, Y_val), (X_test, Y_test) = dataset
+    (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), _ = dataset
 
     num_classes = 5 # num folders
     IMG_SHAPE = (224, 224, 3)
@@ -113,11 +116,13 @@ def train_model(dataset, learning_rate=0.01, momentum=0.0):
 
     return model, final_history
 
-def eval_model(history, info=""):
+def eval_model(model, history, dataset, info=""):
     """Plot the training and validation errors vs time as well as 
     the training and validation accuracies.
 
+    model: a DCNN model
     history: the history dict
+    dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
     
     return the maximum validation accuracy
     """
@@ -146,6 +151,23 @@ def eval_model(history, info=""):
     plt.xlabel('epoch')
     plt.show()
 
+    # plot confusion matrix
+    (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names = dataset
+    predition = np.argmax(model.predict(X_test), axis=1)
+    loss, test_accuracy = model.evaluate(X_test, Y_test)
+
+    fig = plt.figure(figsize=[10, 10])    
+    ax = fig.add_subplot(1, 1, 1)
+    ax.set_title(f"Test Accuracy: {test_accuracy}")  
+
+    confusion_mtx = tf.math.confusion_matrix(Y_test, predition) 
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(confusion_mtx, xticklabels=class_names, yticklabels=class_names, 
+            annot=True, fmt='g', ax=ax)
+
+    # print F1-Score
+    print(classification_report(predition, Y_test))
+
     # Get the maximum val accuracy
     return np.max(val_acc)
 
@@ -155,13 +177,13 @@ def eval_first_model(dataset, learning_rate=0.01, momentum=0.0):
     learning_rate=0.01, momentum=0.0, nesterov=False.
     
     parameters:
-        dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test)
+        dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
         learning_rate: the learning rate for SGD optimizer
         momentum: the momentum value for SGD optimizer
     """
     info = "(learning_rate=0.01, momentum=0.0, nesterov=False)"
     model, history = train_model(dataset, learning_rate, momentum)
-    eval_model(history, info)
+    eval_model(model, history, dataset,info)
     loss, accuracy = model.evaluate(*dataset[2])
     print('Test accuracy :', accuracy)
 
@@ -170,7 +192,7 @@ def eval_three_learning_rate(dataset, learning_rates=[]):
     Plot the results, draw conclusions.
     
     parameters:
-        dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test)
+        dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
         learning_rates: a list of learning rates for SGD optimizer
     
     return: the best learning rate which has the highest validation accuracy
@@ -178,9 +200,11 @@ def eval_three_learning_rate(dataset, learning_rates=[]):
     best_learning_rate = -1
     best_val_accuracy = -1
     for learning_rate in learning_rates:
-        info = f"(learning_rate={learning_rate}, momentum=0.0)"
+        info = f"(learning_rate={learning_rate}-momentum=0.0)"
         model, history = train_model(dataset, learning_rate)
-        val_acc = eval_model(history, info)
+        model.save(info)
+        val_acc =  eval_model(model, history, dataset,info)
+
         if val_acc > best_val_accuracy:
             best_val_accuracy = val_acc
             best_learning_rate = learning_rate
@@ -197,16 +221,18 @@ def eval_three_momentum(dataset, best_learning_rate, momentum_values=[]):
     Plot the results, draw conclusions.
     
     parameters:
-        dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test)
+        dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
         best_learning_rate: the learning rate for SGD optimizer
         momentum_values: a list of momentum values for SGD optimizer
     """
     best_momentum = -1
     best_val_accuracy = -1
     for momentum in momentum_values:
-        info = f"(learning_rate={best_learning_rate}, momentum={momentum})"
+        info = f"(learning_rate={best_learning_rate}-momentum={momentum})"
         model, history = train_model(dataset, best_learning_rate, momentum)
-        val_acc = eval_model(history, info)
+        model.save(info)
+        val_acc = eval_model(model, history, dataset,info)
+
         if val_acc > best_val_accuracy:
             best_val_accuracy = val_acc
             best_momentum = momentum
