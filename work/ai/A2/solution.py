@@ -124,7 +124,7 @@ def eval_model(model, history, dataset, info=""):
     history: the history dict
     dataset: (X_train, Y_train), (X_val, Y_val), (X_test, Y_test), class_names
     
-    return the maximum validation accuracy
+    return the latest validation accuracy
     """
     acc = history['accuracy']
     val_acc = history['val_accuracy']
@@ -168,8 +168,8 @@ def eval_model(model, history, dataset, info=""):
     # print F1-Score
     print(classification_report(predition, Y_test))
 
-    # Get the maximum val accuracy
-    return np.max(val_acc)
+    # Get the last val accuracy
+    return val_acc[-1]
 
 def eval_first_model(dataset, learning_rate=0.01, momentum=0.0):
     """Compile and train your model with an SGD
@@ -253,8 +253,8 @@ if __name__ == "__main__":
     eval_first_model(dataset)
 
     # Experiment with 3 different orders of magnitude for the learning rate.
-    best_learning_rate = eval_three_learning_rate(dataset,learning_rates=[0.001, 0.01, 0.1])
+    best_learning_rate = eval_three_learning_rate(dataset,learning_rates=[0.001, 0.01, 1])
 
     # add a non zero momentum to the training with the SGD optimizer 
     # (consider 3 values for the momentum)
-    eval_three_momentum(dataset, best_learning_rate, momentum_values=[0.1, 0.3, 0.5])
+    eval_three_momentum(dataset, best_learning_rate, momentum_values=[0.5, 0.9, 0.98])
