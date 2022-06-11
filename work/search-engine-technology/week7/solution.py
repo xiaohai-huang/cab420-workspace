@@ -1,4 +1,5 @@
 import glob, os
+from pydoc import doc
 import string
 
 
@@ -40,6 +41,33 @@ def task1(inputpath):
     print(R)
     return (A,B,R)
 
+def task3(rel_doc, retrieved_doc, ranked_doc):
+    # a set of relevant doc
+    A = set()
+    for docID, relevance_judgement in rel_doc.items():
+        if relevance_judgement == 1:
+            A.add(docID)
+    # a set of retrieved doc
+    B = set()
+    for docID, relevance_value in retrieved_doc.items():
+        if relevance_value == 1:
+            B.add(docID)
+
+    avg_precision = 0
+    count = 0
+    for n, docID in ranked_doc.items():
+        # only calculate these measures if a relevant document was retrieved
+        if docID in A:
+
+            # B_n is the set of top-n documents in the output of the IR model
+            B_n = set(list(ranked_doc.values())[:n])
+            A_and_B_n = len(set.intersection(A, B_n))
+            recall = A_and_B_n / len(A)
+            precision = A_and_B_n / n
+            print("At position " + str(int(n)) + " docID: " + docID + ", precision= " + str(precision) +f", recall={recall}")
+            avg_precision += precision
+            count += 1
+    print(f"avg precision={avg_precision/count}")
 if __name__ == '__main__':
 
     import sys
@@ -47,7 +75,8 @@ if __name__ == '__main__':
     #     sys.stderr.write("USAGE: %s <coll-file>\n" % sys.argv[0])
     #     sys.exit()
     (rel_doc, retrived_doc, ranked_doc) = task1("rel_data")
-
+    task3(rel_doc, retrived_doc, ranked_doc)
+    raise Exception
     # for task 2
     R = 0
     for (x,y) in rel_doc.items():
@@ -78,7 +107,8 @@ if __name__ == '__main__':
     print("For task 3:")
     ri = 0
     ap1 = 0.0
-    for (n,id) in sorted(ranked_doc.items(), key=lambda x: int(x[0])):
+    ranked_doc = sorted(ranked_doc.items(), key=lambda x: int(x[0]))
+    for (n,id) in ranked_doc:
         if (rel_doc[id]==1):
             ri =ri+1
             pi = float(ri)/float(int(n))
