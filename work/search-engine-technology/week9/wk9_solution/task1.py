@@ -10,47 +10,55 @@ def avg_doc_len(coll):
     return tot_dl/coll.get_num_docs()
     
 def w5(coll, ben, theta):
-    T={}
-    # select T from positive documents and r(tk)
-    for id, doc in coll.get_docs().items():
-        # check if the doc is in relevant documents set D+
-        if ben[id] > 0:
-            for term, freq in doc.terms.items():
-                try:
-                    T[term] += 1
-                except KeyError:
-                    T[term] = 1
-    #calculate n(tk)
-    ntk = {}
-    for id, doc in coll.get_docs().items():
-        for term in doc.get_term_list():
-            try:
-                ntk[term] += 1
-            except KeyError:
-                ntk[term] = 1
-    
-    #calculate N and R
-                    
-    No_docs = coll.get_num_docs()
-    # The size of relevant documents set
-    R = 0
-    for id, fre in ben.items():
-        if ben[id] > 0:
-            R += 1
-    
-    for id, rtk in T.items():
-        T[id] = ((rtk+0.5) / (R-rtk + 0.5)) / ((ntk[id]-rtk+0.5)/(No_docs-ntk[id]-R+rtk +0.5)) 
+    # Find D_plus, The set of relevant documents
+    D_plus = set()
+    for docID, relevance_judgement in ben.items():
+        if relevance_judgement == 1:
+            D_plus.add(docID)
 
-    #calculate the mean of w4 weights.
-    meanW5= 0
-    for id, rtk in T.items():
-        meanW5 += rtk
-    meanW5 = meanW5/len(T)
+    N = coll.get_num_docs()
+    # The size of all relevant documents
+    R = len(D_plus)
 
-    #Features selection
-    Features = {t:r for t,r in T.items() if r > meanW5 + theta }
-    return Features
-    
+    # All terms in D_plus
+    T = set()
+    for docID, doc in coll.get_docs().items():
+        if docID in D_plus:
+            # add terms to T
+            T.update(doc.get_term_list())
+
+    # step 2
+    n = {}
+    r = {}
+    for tk in T:
+        n[tk] = 0
+        r[tk] = 0
+
+    # step 3
+    for tk in T:
+        for doc in coll.get_docs().values():
+            if tk in doc.get_term_list():
+                n[tk] = n[tk] + 1
+
+    # step 4
+    docs = coll.get_docs()
+    for tk in T:
+        for docID in D_plus:
+            doc = docs[docID]
+            if tk in doc.get_term_list():
+                r[tk] = r[tk] + 1
+
+    # step 5
+    W_5 = {}
+    for tk in T:
+        W_5[tk] =( (r[tk] + 0.5)/(R - r[tk] + 0.5) ) / ( (n[tk]-r[tk]+0.5)/((N-n[tk])-(R-r[tk])+0.5) )
+
+    W_5_mean = 0
+    for w5 in W_5.values():
+        W_5_mean += w5
+    W_5_mean /= len(T)
+
+    return {tk:w5 for tk, w5 in W_5.items() if w5 > (W_5_mean + theta)}
 if __name__ == "__main__":
 
     import sys
