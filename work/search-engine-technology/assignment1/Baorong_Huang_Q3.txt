@@ -1,0 +1,92 @@
+Average document length for this collection is: 340.5
+The query is: Deaths mining accidents
+The following are the BM25 score for each document:
+Document ID: 75135, Doc Length: 265 -- BM25 Score: 2.016725388884778
+Document ID: 78091, Doc Length: 90 -- BM25 Score: 1.748675953066234
+Document ID: 78092, Doc Length: 163 -- BM25 Score: 1.5537357475577047
+Document ID: 71406, Doc Length: 357 -- BM25 Score: 1.1986310135782883
+Document ID: 69629, Doc Length: 357 -- BM25 Score: 1.1986310135782883
+Document ID: 69633, Doc Length: 414 -- BM25 Score: 1.1232065781332516
+Document ID: 75338, Doc Length: 428 -- BM25 Score: 1.1061112071306798
+Document ID: 67460, Doc Length: 30 -- BM25 Score: 0.0
+Document ID: 71759, Doc Length: 1082 -- BM25 Score: 0.0
+Document ID: 86836, Doc Length: 129 -- BM25 Score: 0.0
+Document ID: 81047, Doc Length: 499 -- BM25 Score: 0.0
+Document ID: 71948, Doc Length: 272 -- BM25 Score: 0.0
+
+The following are possibly relevant documents retrieved -
+75135 2.016725388884778
+78091 1.748675953066234
+78092 1.5537357475577047
+71406 1.1986310135782883
+69629 1.1986310135782883
+69633 1.1232065781332516
+Average document length for this collection is: 340.5
+The query is: Mentioning deaths in mining accidents
+The following are the BM25 score for each document:
+Document ID: 75135, Doc Length: 265 -- BM25 Score: 2.016725388884778
+Document ID: 78091, Doc Length: 90 -- BM25 Score: 1.748675953066234
+Document ID: 78092, Doc Length: 163 -- BM25 Score: 1.5537357475577047
+Document ID: 71406, Doc Length: 357 -- BM25 Score: 1.1986310135782883
+Document ID: 69629, Doc Length: 357 -- BM25 Score: 1.1986310135782883
+Document ID: 69633, Doc Length: 414 -- BM25 Score: 1.1232065781332516
+Document ID: 75338, Doc Length: 428 -- BM25 Score: 1.1061112071306798
+Document ID: 67460, Doc Length: 30 -- BM25 Score: 0.0
+Document ID: 71759, Doc Length: 1082 -- BM25 Score: 0.0
+Document ID: 86836, Doc Length: 129 -- BM25 Score: 0.0
+Document ID: 81047, Doc Length: 499 -- BM25 Score: 0.0
+Document ID: 71948, Doc Length: 272 -- BM25 Score: 0.0
+
+The following are possibly relevant documents retrieved -
+75135 2.016725388884778
+78091 1.748675953066234
+78092 1.5537357475577047
+71406 1.1986310135782883
+69629 1.1986310135782883
+69633 1.1232065781332516
+Average document length for this collection is: 340.5
+The query is: Statistics on number of mining deaths
+The following are the BM25 score for each document:
+Document ID: 75135, Doc Length: 265 -- BM25 Score: 2.016725388884778
+Document ID: 78091, Doc Length: 90 -- BM25 Score: 1.748675953066234
+Document ID: 78092, Doc Length: 163 -- BM25 Score: 1.5537357475577047
+Document ID: 71406, Doc Length: 357 -- BM25 Score: 1.1986310135782883
+Document ID: 69629, Doc Length: 357 -- BM25 Score: 1.1986310135782883
+Document ID: 69633, Doc Length: 414 -- BM25 Score: 1.1232065781332516
+Document ID: 75338, Doc Length: 428 -- BM25 Score: 1.1061112071306798
+Document ID: 67460, Doc Length: 30 -- BM25 Score: 0.0
+Document ID: 71759, Doc Length: 1082 -- BM25 Score: 0.0
+Document ID: 86836, Doc Length: 129 -- BM25 Score: 0.0
+Document ID: 81047, Doc Length: 499 -- BM25 Score: 0.0
+Document ID: 71948, Doc Length: 272 -- BM25 Score: 0.0
+
+The following are possibly relevant documents retrieved -
+75135 2.016725388884778
+78091 1.748675953066234
+78092 1.5537357475577047
+71406 1.1986310135782883
+69629 1.1986310135782883
+69633 1.1232065781332516
+Average document length for this collection is: 340.5
+The query is: ethnic clashes and resultant deaths of mine workers near a mine
+The following are the BM25 score for each document:
+Document ID: 78091, Doc Length: 90 -- BM25 Score: 10.534204143763056
+Document ID: 78092, Doc Length: 163 -- BM25 Score: 9.775680937979772
+Document ID: 71406, Doc Length: 357 -- BM25 Score: 7.65953403706305
+Document ID: 69629, Doc Length: 357 -- BM25 Score: 7.65953403706305
+Document ID: 69633, Doc Length: 414 -- BM25 Score: 7.083625712965558
+Document ID: 71948, Doc Length: 272 -- BM25 Score: 5.795072456166559
+Document ID: 75338, Doc Length: 428 -- BM25 Score: 2.2122224142613596
+Document ID: 81047, Doc Length: 499 -- BM25 Score: 2.053701514601925
+Document ID: 75135, Doc Length: 265 -- BM25 Score: 2.016725388884778
+Document ID: 71759, Doc Length: 1082 -- BM25 Score: 1.1569426298697238
+Document ID: 67460, Doc Length: 30 -- BM25 Score: 0.0
+Document ID: 86836, Doc Length: 129 -- BM25 Score: 0.0
+
+The following are possibly relevant documents retrieved -
+78091 10.534204143763056
+78092 9.775680937979772
+71406 7.65953403706305
+69629 7.65953403706305
+69633 7.083625712965558
+71948 5.795072456166559
