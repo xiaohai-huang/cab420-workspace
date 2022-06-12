@@ -11,3 +11,4 @@ ipython_config.py
 *:Zone.Identifier
 __pycache__
 __MACOSX
+.DS_Store
